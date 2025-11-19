@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext } from 'react';
 import dayjs from "dayjs";
 import {
     Button,
@@ -9,52 +9,57 @@ import {
     Select,
 } from 'antd';
 import { EmployeeContext } from '../context/EmployeeContext';
-const normFile = e => {
-    if (Array.isArray(e)) {
-        return e;
-    }
-    return e?.fileList;
-};
+import { useForm } from 'antd/es/form/Form';
+
+
 const FormDisabledDemo = () => {
+
     const { dispatch, status } = useContext(EmployeeContext)
     const [progressAPI, progressContextHolder] = message.useMessage();
     const [successMessageApi, successMessagecontextHolder] = message.useMessage();
+    const [form] = useForm()
+
+
     const progressIndicator = () => {
         progressAPI.open({
             type: 'loading',
             content: 'Action in progress..',
             duration: 0,
         });
-        // Dismiss manually and asynchronously
-        // setTimeout(messageApi.destroy, 2500);
     };
+
+
     const successMessage = () => {
         successMessageApi.open({
             type: 'success',
             content: 'Employee added successfully',
         });
     };
-    const [componentDisabled, setComponentDisabled] = useState(false);
+
 
     const handlesubmit = (values) => {
-        // values.join = JSON.stringify(values.join.$d)
         values.join = Date(values.join.$d)
         dispatch({ type: "PROGRESSING" })
         progressIndicator()
+
+
         dispatch({ type: "ADD_EMPLOYEE", payload: values })
         progressAPI.destroy()
         successMessage()
+        form.resetFields()
     }
+
+
     return (
         <>
             {progressContextHolder}
             {successMessagecontextHolder}
-            {/* {status === 'pending' && <TopProgressIndicator />} */}
+
             <Form
+                form={form}
                 labelCol={{ span: 14 }}
                 wrapperCol={{ span: 14 }}
                 layout="vertical"
-                disabled={componentDisabled}
                 style={{ maxWidth: 1200 }}
                 className='addemployee__form'
                 onFinish={handlesubmit}

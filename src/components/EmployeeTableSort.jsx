@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Table } from 'antd';
 import { EmployeeContext } from '../context/EmployeeContext';
 const columns = [
@@ -58,18 +58,28 @@ const data = [
   },
 
 ];
-const onChange = (pagination, filters, sorter, extra) => {
-  console.log('params', pagination, filters, sorter, extra);
-};
+
 const EmployeeTable = () => {
+
+  const [pageSizevar, setPageSizevar] = useState(10)
   const { employees } = useContext(EmployeeContext)
   console.log(employees)
 
+  const onChange = (pagination, filters, sorter, extra) => {
+    setPageSizevar(pagination.pageSize)
+  };
 
   return <Table
+    pagination={
+      {
+        pageSize: pageSizevar,
+        showSizeChanger: true,
+        pageSizeOptions: [5, 10, 15, 20]
+      }
+    }
     columns={columns}
     dataSource={employees}
-    onChange={onChange}
+    onChange={() => onChange(setPageSizevar)}
     scroll={{ x: 'max-content', y: 55 * 10 }}
   />;
 }
