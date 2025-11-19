@@ -1,0 +1,19 @@
+.addemployee__container {
+    /* background-color: red; */
+    width: 100%;
+    display: flex;
+    justify-items: flex-start;
+    flex-direction: column;
+
+    .addemployee__form {
+        max-width: 1280px;
+        width: 900px;
+        /* background-color: rgb(66, 66, 158); */
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        justify-items: center;
+
+
+    }
+}

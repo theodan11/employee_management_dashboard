@@ -1,0 +1,16 @@
+.menu__container{
+    padding-top: 10px;
+    width: 100%;
+    /* background-color: red; */
+    height: 100vh;
+    display: relative;
+    top:10px;
+    left:10px; 
+    flex:1;
+
+    h1{
+        margin-left: 10px;
+        font-size: 16px;
+
+    }
+}
