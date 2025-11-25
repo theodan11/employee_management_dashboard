@@ -55,6 +55,13 @@ const columns = [
     title: 'Status',
     dataIndex: 'Status',
     key: '4',
+    width: 120,
+  },
+
+  {
+    title: 'Actions',
+    dataIndex: 'actions',
+    key: '5',
     width: 150,
   },
 //   {

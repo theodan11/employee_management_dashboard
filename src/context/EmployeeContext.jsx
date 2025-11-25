@@ -3,15 +3,20 @@ import { EmployeeReducer } from "./EmployeeReducer"
 
 const INITIAL_STATE = {
     employees: [
-        {
+        {   
+            key: 1,
+            id: 1,
             name: "Theophil Dango",
             department: "cse",
             status: "Noob",
             join: '2d',
             role: "CEO"
         }
+
     ],
     // employees: JSON.parse(localStorage.getItem("employees")) | [],
+    selectedEmployee: null,
+    isDrawerOpen : false,
     status: 'idle',
     error: null
 }
@@ -31,7 +36,10 @@ export const EmployeeContextProvider = ({ children }) => {
         {
             employees: state.employees,
             dispatch,
-            status: state.status
+            status: state.status,
+            isDrawerOpen: state.isDrawerOpen,
+            selectedEmployee: state.selectedEmployee
+            
         }
 
     }>

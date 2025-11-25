@@ -1,42 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { Table } from 'antd';
+import { Button, Table } from 'antd';
 import { EmployeeContext } from '../context/EmployeeContext';
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    sorter: {
-      compare: (a, b) => a.name.localeCompare(b.name),
-      multiple: 1,
-    },
-  },
-  {
-    title: 'Department',
-    dataIndex: 'department',
-    sorter: {
-      compare: (a, b) => a.department.localeCompare(b.department),
-      multiple: 2,
-    },
-  },
-  {
-    title: 'Role',
-    dataIndex: 'role',
 
-  },
-  {
-    title: 'Joining Date',
-    dataIndex: 'join',
-    sorter: {
-      compare: (a, b) => a.join - b.join,
-      multiple: 2,
-    },
-  },
-  {
-    title: 'Stutus',
-    dataIndex: 'status',
-
-  },
-];
 const data = [
   {
     key: '1',
@@ -60,14 +25,73 @@ const data = [
 ];
 
 const EmployeeTable = () => {
+  const {dispatch,  selectedEmployee} = useContext(EmployeeContext)
 
   const [pageSizevar, setPageSizevar] = useState(10)
   const { employees } = useContext(EmployeeContext)
-  console.log(employees)
+
 
   const onChange = (pagination, filters, sorter, extra) => {
     setPageSizevar(pagination.pageSize)
   };
+
+  const handleEdit = (id)=>{
+    dispatch({type: "SELECT_EMPLOYEE", payload:id})
+    dispatch({type: "DRAWER_OPEN"})
+  }
+
+  const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    sorter: {
+      compare: (a, b) => a.name.localeCompare(b.name),
+      multiple: 1,
+    },
+  },
+  {
+    title: 'Department',
+    dataIndex: 'department',
+    sorter: {
+      compare: (a, b) => a.department.localeCompare(b.department),
+      multiple: 2,
+    },
+     width: 120
+  },
+  {
+    title: 'Role',
+    dataIndex: 'role',
+
+  },
+  {
+    title: 'Joining Date',
+    dataIndex: 'join',
+    sorter: {
+      compare: (a, b) => a.join - b.join,
+      multiple: 2,
+    },
+     width: 120
+  },
+  {
+    title: 'Stutus',
+    dataIndex: 'status',
+
+  },
+  {
+    title: 'Actions',
+ 
+    width: 150,
+    render: (text, record)=>{
+      return <div className='flex gap-2'>
+       < Button size='small'   onClick={()=>handleEdit(record)}>Edit</Button>
+        <Button size='small'  danger>Delete</Button>
+      </div>
+    }
+
+  },
+];
+
+console.log(selectedEmployee)
 
   return <Table
     pagination={
@@ -77,6 +101,7 @@ const EmployeeTable = () => {
         pageSizeOptions: [5, 10, 15, 20]
       }
     }
+    
     columns={columns}
     dataSource={employees}
     onChange={() => onChange(setPageSizevar)}
