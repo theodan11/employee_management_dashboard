@@ -71,13 +71,35 @@ const FormDisabledDemo = () => {
                     <Input className='form__input' />
                 </Form.Item>
                 <Form.Item name="department" label="Department" required >
-                    <Select options={[{ label: 'Demo', value: 'demo' }]} />
+                    <Select options={[{ label: "Engineering", value: "engineering" },
+                    { label: "Human Resources", value: "hr" },
+                    { label: "Marketing", value: "marketing" },
+                    { label: "Finance", value: "finance" },
+                    { label: "Design", value: "design" },
+                    { label: "Operations", value: "operations" },
+                    { label: "Support", value: "support" },
+                    { label: "Sales", value: "sales" }]} />
                 </Form.Item>
                 <Form.Item name="status" label="Status" required >
-                    <Select options={[{ label: 'Demo', value: 'demo' }]} />
+                    <Select options={[
+                        { label: "Active", value: "active" },
+                        { label: "On Leave", value: "on_leave" },
+                        { label: "Resigned", value: "resigned" },
+                        { label: "Terminated", value: "terminated" },
+                        { label: "Probation", value: "probation" }]} />
                 </Form.Item>
                 <Form.Item name="role" label="Role" required >
-                    <Select options={[{ label: 'Demo', value: 'demo' }]} />
+                    <Select options={[
+  { label: 'Software Engineer', value: 'software_engineer' },
+  { label: 'Product Manager', value: 'product_manager' },
+  { label: 'UI/UX Designer', value: 'ui_ux_designer' },
+  { label: 'Data Analyst', value: 'data_analyst' },
+  { label: 'QA Engineer', value: 'qa_engineer' },
+  { label: 'DevOps Engineer', value: 'devops_engineer' },
+  { label: 'HR Manager', value: 'hr_manager' },
+  { label: 'Marketing Specialist', value: 'marketing_specialist' },
+  { label: 'Sales Executive', value: 'sales_executive' },
+  { label: 'CEO', value: 'ceo' },]} />
                 </Form.Item>
 
 
