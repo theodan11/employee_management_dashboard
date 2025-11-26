@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Button, Table } from 'antd';
 import { EmployeeContext } from '../context/EmployeeContext';
-
+import dayjs from "dayjs";
 const data = [
   {
     key: '1',
@@ -66,11 +66,13 @@ const EmployeeTable = () => {
   {
     title: 'Joining Date',
     dataIndex: 'join',
+    width: 120,
+    render: (date)=> dayjs(date).format("DD MMM YYYY"),
     sorter: {
       compare: (a, b) => a.join - b.join,
       multiple: 2,
     },
-     width: 120
+     
   },
   {
     title: 'Stutus',
@@ -92,6 +94,7 @@ const EmployeeTable = () => {
 ];
 
 console.log(selectedEmployee)
+console.log(employees)
 
   return <Table
     pagination={

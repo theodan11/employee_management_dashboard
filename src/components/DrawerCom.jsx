@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
+import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space, message } from 'antd';
 import dayjs from "dayjs";
 import { EmployeeContext } from '../context/EmployeeContext';
 const UrlInput = props => {
@@ -14,20 +14,48 @@ const UrlInput = props => {
 };
 const App = () => {
     const { isDrawerOpen, selectedEmployee, dispatch } = useContext(EmployeeContext)
-    const [open, setOpen] = useState(false);
-    const showDrawer = () => {
-        setOpen(true);
-    };
+    const [progressAPI, progressContextHolder] = message.useMessage();
+    const [successMessageApi, successMessagecontextHolder] = message.useMessage();
     const onClose = () => {
         dispatch({ type: "DRAWER_CLOSE" })
-
     };
+
+
+    const progressIndicator = () => {
+        progressAPI.open({
+            type: 'loading',
+            content: 'Action in progress..',
+            duration: 0,
+        });
+    };
+
+
+    const successMessage = () => {
+        successMessageApi.open({
+            type: 'success',
+            content: 'Employee updated successfully',
+        });
+    };
+
+    const handleEditSave = (values) => {
+        console.log(`Edit Form values: ${values.name}`)
+        values.join = values.join.format("YYYY MMM DD")
+        dispatch({
+            type: "EDIT_EMPLOYEE", payload: {
+                id: selectedEmployee.id,
+                updatedInfo: { ...values }
+            }
+        })
+        successMessage()
+        // dispatch({ type: "DRAWER_CLOSE" })
+    }
     // console.log(selectedEmployee)
     return (
         <>
-            <Button type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
-                New account
-            </Button>
+            {progressContextHolder}
+            {successMessagecontextHolder}
+
+
             <Drawer
                 title="Edit Employee "
                 size={720}
@@ -38,26 +66,30 @@ const App = () => {
                         paddingBottom: 80,
                     },
                 }}
-                extra={
-                    <Space>
-                        <Button onClick={onClose}>Cancel</Button>
-                        <Button onClick={isDrawerOpen} type="primary">
-                            Save
-                        </Button>
-                    </Space>
-                }
+    
             >
                 {selectedEmployee &&
-                    <Form layout="vertical" requiredMark={false}>
+                    <Form
+                        layout="vertical"
+                        requiredMark={false}
+                        initialValues={{
+                            name: selectedEmployee.name,
+                            department: selectedEmployee.department,
+                            role: selectedEmployee.role,
+                            status: selectedEmployee.status,
+                            join: dayjs(selectedEmployee.join, "YYYY-MMM-DD")
+                        }}
+                        onFinish={handleEditSave}
+                    >
                         <Row gutter={16}>
                             <Col span={24}>
                                 <Form.Item
-                                    defaultValue={selectedEmployee?.name}
+
                                     name="name"
                                     label="Name"
                                     rules={[{ required: true, message: 'Please enter user name' }]}
                                 >
-                                    <Input placeholder="Please enter user name" defaultValue={selectedEmployee.name} />
+                                    <Input placeholder="Please enter user name" />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -69,7 +101,6 @@ const App = () => {
                                     rules={[{ required: true, message: 'Please select an owner' }]}
                                 >
                                     <Select
-                                    defaultValue={selectedEmployee.department}
                                         placeholder="Please select an owner"
                                         options={[
                                             { label: 'Xiaoxiao Fu', value: 'xiao' },
@@ -85,7 +116,6 @@ const App = () => {
                                     rules={[{ required: true, message: 'Please choose the role' }]}
                                 >
                                     <Select
-                                    defaultValue={selectedEmployee.role}
                                         placeholder="Please choose the type"
                                         options={[
                                             { label: 'private', value: 'private' },
@@ -103,7 +133,6 @@ const App = () => {
                                     rules={[{ required: true, message: 'Please choose the Status' }]}
                                 >
                                     <Select
-                                    defaultValue={selectedEmployee.status}
                                         placeholder="Please choose the approver"
                                         options={[
                                             { label: 'Jack Ma', value: 'jack' },
@@ -114,18 +143,33 @@ const App = () => {
                             </Col>
                             <Col span={12}>
                                 <Form.Item
-                                    name="dateTime"
-                                    label="DateTime"
+                                    name="join"
+                                    label="Joining Date"
                                     rules={[{ required: true, message: 'Please choose the dateTime' }]}
                                 >
                                     <DatePicker
-                                    defaultValue={selectedEmployee.join}
                                         style={{ width: '100%' }}
                                         getPopupContainer={trigger => trigger.parentElement}
                                         disabledDate={(current) => current && current > dayjs().endOf("day")}
                                     />
                                 </Form.Item>
                             </Col>
+
+
+                        </Row>
+                        <Row gutter={16}>
+                            <Col span={10}>
+                                <Button onClick={onClose}>Cancel</Button>
+
+                            </Col>
+
+                            <Col span={10}>
+                                <Button htmlType='submit' type="primary">
+                                    Save & Continue Editing
+                                </Button>
+
+                            </Col>
+
                         </Row>
 
                     </Form>

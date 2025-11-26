@@ -1,5 +1,10 @@
 .main__layout{
   display: flex;
   gap: 16px;
-  
+ .main__body{
+  margin-top: 20px;
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+ } 
 }

@@ -38,7 +38,9 @@ const FormDisabledDemo = () => {
 
 
     const handlesubmit = (values) => {
-        values.join = Date(values.join.$d)
+        values.join = values.join.format("YYYY-MMM-DD")
+        values.key = Math.floor(Math.random() * 100)
+        values.id = values.key
         dispatch({ type: "PROGRESSING" })
         progressIndicator()
 
