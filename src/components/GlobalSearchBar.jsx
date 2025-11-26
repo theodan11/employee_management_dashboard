@@ -98,16 +98,16 @@ const GlobalSearchBar = () => {
 
                 />
             </Form.Item>
-            <Form.Item>
+            {/* <Form.Item>
                 <Button htmlType='submit' type='primary'>Search</Button>
-            </Form.Item>
+            </Form.Item> */}
 
         </Form>
-        {searchResult ? <div className="search_result">
+        {searchResult.length >0 ? <div className="search_result">
             {searchResult.map((item) => {
-                return <div key={item.id} className="search_item">{item.name}</div>
+                return <div key={item.id} className="search_item">{item.name} - {item.department}</div>
             })}
-        </div> : null}
+        </div> : <></>}
     </div>
 
 };

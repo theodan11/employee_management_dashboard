@@ -41,6 +41,7 @@ const FormDisabledDemo = () => {
         values.join = values.join.format("YYYY-MMM-DD")
         values.key = Math.floor(Math.random() * 100)
         values.id = values.key
+        values.archive = false
         dispatch({ type: "PROGRESSING" })
         progressIndicator()
 

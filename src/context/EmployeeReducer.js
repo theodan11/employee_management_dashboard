@@ -48,6 +48,14 @@ export const EmployeeReducer = (state, action) => {
                 // selectedEmployee: null,
             }
 
+        case "ARCHIVE_EMPLOYEE":
+            return {
+                ...state,
+                employees: state.employees.map((employee)=>{
+                    return employee.id === action.payload.id ? {...employee, ...action.payload.archive}: employee
+                })
+            }
+
         default:
             return state
     }
