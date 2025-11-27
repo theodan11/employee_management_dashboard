@@ -24,16 +24,24 @@ const data = [
 
 ];
 
-const EmployeeTable = () => {
+const EmployeeTable = ({isArchive = false}) => {
   const { dispatch, selectedEmployee } = useContext(EmployeeContext)
 
   const [pageSizevar, setPageSizevar] = useState(10)
   const { employees } = useContext(EmployeeContext)
 
   const [successMessageApi, successMessagecontextHolder] = message.useMessage();
-  const filterNonArchivedEmployees = employees.filter((employee) => {
-    return employee?.archive === false
-  })
+let filterNonArchivedEmployees
+  if(isArchive){
+
+     filterNonArchivedEmployees = employees.filter((employee) => {
+      return employee?.archive === true
+    })
+  }else{
+     filterNonArchivedEmployees = employees.filter((employee) => {
+      return employee?.archive === false
+    })
+  }
 
   const successMessage = (name) => {
     successMessageApi.open({
@@ -134,7 +142,7 @@ const EmployeeTable = () => {
       dataSource={filterNonArchivedEmployees}
       onChange={() => onChange(setPageSizevar)}
       scroll={{ x: 'max-content', y: 55 * 10 }}
-    />;
+    />
   </>
 }
 export default EmployeeTable;

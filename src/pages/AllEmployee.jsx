@@ -6,7 +6,7 @@ const AllEmployee = () => {
   return (
     <div className="allemployee__container">
         <h2>All Employees</h2>
-        <EmployeeTableSort/>
+        <EmployeeTableSort isArchive={false}/>
         <DrawerCom/>
     </div>
   )

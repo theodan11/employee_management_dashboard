@@ -27,7 +27,8 @@ const INITIAL_STATE = {
     selectedEmployee: null,
     isDrawerOpen : false,
     status: 'idle',
-    error: null
+    error: null,
+    totalEmployee: 0
 }
 
 export const EmployeeContext = createContext(INITIAL_STATE)
@@ -47,8 +48,8 @@ export const EmployeeContextProvider = ({ children }) => {
             dispatch,
             status: state.status,
             isDrawerOpen: state.isDrawerOpen,
-            selectedEmployee: state.selectedEmployee
-            
+            selectedEmployee: state.selectedEmployee,
+            totalEmployee: state.totalEmployee
         }
 
     }>

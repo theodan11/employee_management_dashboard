@@ -12,7 +12,8 @@ export const EmployeeReducer = (state, action) => {
             return {
                 ...state,
                 employees: [...state.employees, action.payload],
-                status: "success"
+                status: "success",
+
             }
 
         case "SELECT_EMPLOYEE":
@@ -42,7 +43,7 @@ export const EmployeeReducer = (state, action) => {
             return {
                 ...state,
                 employees: state.employees.map((employee) =>
-                    employee.id === action.payload.id ? {...employee, ...action.payload.updatedInfo }: employee
+                    employee.id === action.payload.id ? { ...employee, ...action.payload.updatedInfo } : employee
                 ),
                 // isDrawerOpen: false,
                 // selectedEmployee: null,
@@ -51,9 +52,15 @@ export const EmployeeReducer = (state, action) => {
         case "ARCHIVE_EMPLOYEE":
             return {
                 ...state,
-                employees: state.employees.map((employee)=>{
-                    return employee.id === action.payload.id ? {...employee, ...action.payload.archive}: employee
+                employees: state.employees.map((employee) => {
+                    return employee.id === action.payload.id ? { ...employee, ...action.payload.archive } : employee
                 })
+            }
+
+        case "TOTAL_EMPLOYEE":
+            return {
+                ...state,
+                totalEmployee: state.employees.length
             }
 
         default:

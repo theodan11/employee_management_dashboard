@@ -1,8 +1,7 @@
-import React from 'react';
-import { AppstoreOutlined, LayoutOutlined,  TeamOutlined } from '@ant-design/icons';
+import {  LayoutOutlined,  TeamOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import './MenuCom.css'
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 
 const items = [
   {
@@ -15,8 +14,8 @@ const items = [
         label: '',
         type: 'group',
         children: [
-          { key: '1', label: 'Overview' },
-          { key: '2', label: 'Quick Stats' },
+          { key: 'overview', label: 'Overview' },
+          // { key: '2', label: 'Quick Stats' },
         ],
       },
 
@@ -29,47 +28,21 @@ const items = [
     children: [
       { key: 'allemployee', label: 'All Employees'},
       { key: 'addemployee', label: 'Add Employee' },
-      { key: '5', label: 'Archived Employees' },
+      { key: 'archiveemployee', label: 'Archived Employees' },
       { key: '6', label: 'Performance Scores' },
-      {
-        key: 'sub3',
-        label: 'Submenu',
-        children: [
-          { key: '7', label: 'Option 7' },
-          { key: '8', label: 'Option 8' },
-        ],
-      },
+  
     ],
   },
   {
     type: 'divider',
   },
-  // {
-  //   key: 'sub4',
-  //   label: 'Navigation Three',
-  //   icon: <SettingOutlined />,
-  //   children: [
-  //     { key: '9', label: 'Option 9' },
-  //     { key: '10', label: 'Option 10' },
-  //     { key: '11', label: 'Option 11' },
-  //     { key: '12', label: 'Option 12' },
-  //   ],
-  // },
-  // {
-  //   key: 'grp',
-  //   label: 'Group',
-  //   type: 'group',
-  //   children: [
-  //     { key: '13', label: 'Option 13' },
-  //     { key: '14', label: 'Option 14' },
-  //   ],
-  // },
+
 ];
 const MenuCom = () => {
   const navigate = useNavigate()
 
   const onClick = e => {
-    console.log('click ', e.keyPath);
+    // console.log('click ', e.keyPath);
     switch (e.keyPath[0]){
       case "allemployee":
         navigate("/allemployee")
@@ -78,6 +51,14 @@ const MenuCom = () => {
 
       case "addemployee":
         navigate("/addemployee")
+        break
+      
+      case "archiveemployee":
+        navigate("/archiveemployee")
+        break
+
+          case "overview":
+        navigate("/overview")
         break
     }
   };
