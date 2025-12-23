@@ -24,21 +24,21 @@ const data = [
 
 ];
 
-const EmployeeTable = ({isArchive = false}) => {
+const EmployeeTable = ({ isArchive = false }) => {
   const { dispatch, selectedEmployee } = useContext(EmployeeContext)
 
   const [pageSizevar, setPageSizevar] = useState(10)
   const { employees } = useContext(EmployeeContext)
 
   const [successMessageApi, successMessagecontextHolder] = message.useMessage();
-let filterNonArchivedEmployees
-  if(isArchive){
+  let filterNonArchivedEmployees
+  if (isArchive) {
 
-     filterNonArchivedEmployees = employees.filter((employee) => {
+    filterNonArchivedEmployees = employees.filter((employee) => {
       return employee?.archive === true
     })
-  }else{
-     filterNonArchivedEmployees = employees.filter((employee) => {
+  } else {
+    filterNonArchivedEmployees = employees.filter((employee) => {
       return employee?.archive === false
     })
   }
@@ -50,6 +50,17 @@ let filterNonArchivedEmployees
     });
   };
 
+   const successDeleteMessage = (name) => {
+    successMessageApi.open({
+      type: 'success',
+      content: `Employee deleted : ${name}`
+    });
+  };
+  const handleDelete = (record) => {
+    // console.log("called of the delete")
+    dispatch({type: "DELETE_EMPLOYEE", payload: record})
+    successDeleteMessage(record.name)
+  }
 
   const onChange = (pagination, filters, sorter, extra) => {
     setPageSizevar(pagination.pageSize)
@@ -117,7 +128,11 @@ let filterNonArchivedEmployees
       render: (text, record) => {
         return <div className='flex gap-2'>
           < Button size='small' onClick={() => handleEdit(record)}>Edit</Button>
-          <Button size='small' danger onClick={() => handleArchive(record)}>Delete</Button>
+          {
+            isArchive? 
+            <Button size='small' danger onClick={() => handleDelete(record)}>Delete</Button>
+            :<Button size='small' danger onClick={() => handleArchive(record)}>Archive</Button>
+          }
         </div>
       }
 

@@ -63,6 +63,15 @@ export const EmployeeReducer = (state, action) => {
                 totalEmployee: state.employees.length
             }
 
+        case "DELETE_EMPLOYEE":
+            console.log(action.payload)
+            return {
+                ...state,
+                employees: state.employees.map((employee) => {
+                    return employee.id !== action.payload.id
+                })
+            }
+
         default:
             return state
     }
