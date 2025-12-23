@@ -67,7 +67,7 @@ export const EmployeeReducer = (state, action) => {
             console.log(action.payload)
             return {
                 ...state,
-                employees: state.employees.map((employee) => {
+                employees: state.employees.filter((employee) => {
                     return employee.id !== action.payload.id
                 })
             }
